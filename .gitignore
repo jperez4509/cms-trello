@@ -36,3 +36,5 @@ wp-trackback.php
 xmlrpc.php
 license.txt
 readme.html
+Vagrantfile
+.vagrant/
