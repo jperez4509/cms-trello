@@ -24,14 +24,10 @@ add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_child_css', 999 );
 
 
 //calling jp_custom_post function
-add_action('init', 'jp_custom_post');
-
-//if jp_custom_post exist then initiate funciton
-if(jp_custom_post){
-  //function to create custom post type
-  function jp_custom_post(){
-    register_post_type('jp_bussiness',
-    );
+function create_post_type() {
+  register_taxonomy_for_object_type('category', ' Businesses'); // Register Taxonomies for Category
+  register_taxonomy_for_object_type('post_tag', ' Business');
+  register_post_type( 'jp_business',
     array(
       'labels' => array(
         'name' => __( 'Businesses' ),
@@ -40,7 +36,7 @@ if(jp_custom_post){
         'edit_item' => __('Edit Business', 'Business'),
       ),
       'public' => true,
-      'hierarchical' => false,
+      'hierarchical' => false, // Allows your posts to behave like Hierarchy Pages
       'has_archive' => true,
       'menu_icon' => 'dashicons-building',
       'supports' => array(
@@ -49,23 +45,25 @@ if(jp_custom_post){
           'excerpt',
           'thumbnail',
           'revisions',
-      ),
-      'can_export' => true,
+      ), // Go to Dashboard Custom HTML5 Blank post for supports
+      'can_export' => true, // Allows export in Tools > Export
       'taxonomies' => array(
           'post_tag',
           'category'
       ) // Add Category and Post Tags support
-  }
+    )
+  );
 }
-
-//Add Meta Boxes
-function my_admin(){
-    add_meta_box(
-      'business_meta_box',
-      'Business Details',
-      'display_business_meta_box',
-      'jp_bussiness',
-      'normal',
-      'high'
-    );
-}
+add_action( 'init', 'create_post_type' );
+//
+// //Add Meta Boxes
+// function my_admin(){
+//     add_meta_box(
+//       'business_meta_box',
+//       'Business Details',
+//       'display_business_meta_box',
+//       'jp_bussiness',
+//       'normal',
+//       'high'
+//     );
+// }
